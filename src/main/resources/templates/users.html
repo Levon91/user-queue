@@ -23,6 +23,29 @@
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
             <h3 th:text="#{user.table}"></h3>
+            <div id="remove-user-modal" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:text="#{remove}"></h5>
+                            <div class="alert alert-info" hidden="true">
+                                <strong>Success</strong>&nbsp;User removed
+                            </div>
+                            <div class="alert alert-danger" hidden="true">
+                                <strong>Danger</strong>&nbsp;Something went wrong!
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title">Are you sure you want to remove user</h5>
+                            <div class="modal-footer">
+                                <input type="hidden" class="remove-item-id" value=""/>
+                                <button type="button" class="btn btn-danger remove-item-confirm" th:text="#{remove}"></button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{cancel}"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="table table-striped" id="table-users">
                 <thead>
                 <tr>
@@ -75,7 +98,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><p th:text="#{add}"></p></h4>
+                    <h4 class="modal-title"><p th:text="#{user.add}"></p></h4>
                     <div class="alert alert-success" hidden="true">
                         <strong>Success</strong>&nbsp;User added
                     </div>
@@ -107,30 +130,6 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{cancel}"></button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div id="remove-user-modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" th:text="#{remove}"></h5>
-                    <div class="alert alert-info" hidden="true">
-                        <strong>Success</strong>&nbsp;User removed
-                    </div>
-                    <div class="alert alert-danger" hidden="true">
-                        <strong>Danger</strong>&nbsp;Something went wrong!
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <h5 class="modal-title">Are you sure you want to remove user</h5>
-                    <div class="modal-footer">
-                        <input type="hidden" class="remove-item-id" value=""/>
-                        <button type="button" class="btn btn-danger remove-item-confirm" th:text="#{remove}"></button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{cancel}"></button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

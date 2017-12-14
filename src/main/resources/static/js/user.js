@@ -15,10 +15,15 @@ $(document).ready(function () {
             success: function (result) {
                 console.log('SUCCESS CASE result:', result);
                 $(".alert-info").fadeTo(1000, 700).slideUp(700, function(){
-                    $(".alert-info").alert('close');
                     $('#remove-user-modal').modal('hide');
+                    $(".alert-info").alert('close');
                 });
-                location.reload();
+                // location.reload();
+                var rowToDelete = $('#'+id).closest('tr');
+                var nextRow = rowToDelete.next();
+
+                nextRow.remove();
+                rowToDelete.remove();
             },
             error: function (e) {
                 console.log('ERROR CASE result:', e);

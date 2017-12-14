@@ -22,64 +22,45 @@
 
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
-            <h3 th:text="#{user.table}"></h3>
-            <div id="remove-user-modal" class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" th:text="#{remove}"></h5>
-                            <div class="alert alert-info" hidden="true">
-                                <strong>Success</strong>&nbsp;User removed
-                            </div>
-                            <div class="alert alert-danger" hidden="true">
-                                <strong>Danger</strong>&nbsp;Something went wrong!
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <h5 class="modal-title">Are you sure you want to remove user</h5>
-                            <div class="modal-footer">
-                                <input type="hidden" class="remove-item-id" value=""/>
-                                <button type="button" class="btn btn-danger remove-item-confirm" th:text="#{remove}"></button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{cancel}"></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <table class="table table-striped" id="table-users">
-                <thead>
-                <tr>
-                    <th class="col-md-1">Id</th>
-                    <th class="col-md-1" th:text="#{first.name}"></th>
-                    <th class="col-md-1" th:text="#{last.name}"></th>
-                    <th class="col-md-1" th:text="#{action}"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <div th:each="user : ${users}">
+            <div class="col-xs-9 col-xs-offset-1">
+                <h3 th:text="#{user.table}"></h3>
+                <table class="table table-striped" id="table-users">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">Id</th>
+                        <th class="col-md-4" th:text="#{first.name}"></th>
+                        <th class="col-md-4" th:text="#{last.name}"></th>
+                        <th class="col-md-1" th:text="#{action}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="user : ${users}">
                     <tr class="user-info" data-toggle="collapse"
                         th:attr="data-target='.user-info-collapse-' + ${user.id}">
                         <td th:text="${user.id}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
                         <td>
-                            <a href="#" th:attr="id='' + ${user.id}" role="button" data-toggle="modal"
-                               data-target="#remove-user-modal" class="btn btn-danger remove-item" th:text="#{remove}" data-id1="xxx"></a>
+                            <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                               data-target="#update-user-modal" class="update-item"><span
+                                    class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
+                            <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                               data-target="#remove-user-modal" class="remove-item"><span
+                                    class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                     <tr th:classappend="${'user-info-collapse-' + user.id}" class="collapse">
-                        <td></td>
+                        <td><span class="glyphicon glyphicon-chevron-right"></span></td>
                         <td th:text="${user.aheadUser}" colspan="1"></td>
                         <td colspan="2"></td>
                     </tr>
-                </div>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <ul class="pager">
-                <li><a href="#" th:text="#{previous}"></a></li>
-                <li><a href="#" th:text="#{next}"></a></li>
-            </ul>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add-user-modal"
+                        th:text="#{user.add}">
+                </button>
+            </div>
+
         </div>
         <div id="menu1" class="tab-pane fade">
             <h2 th:text="#{about}"></h2>
@@ -90,9 +71,6 @@
             <p>Some content in contact tab.</p>
         </div>
     </div>
-
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add-user-modal" th:text="#{user.add}">
-    </button>
 
     <div id="add-user-modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -127,9 +105,72 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" th:text="#{user.add}"></button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{cancel}"></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                th:text="#{cancel}"></button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="update-user-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{update}"></h5>
+                    <div class="alert alert-info" hidden="true">
+                        <strong>Success</strong>&nbsp;User updated
+                    </div>
+                    <div class="alert alert-danger" hidden="true">
+                        <strong>Danger</strong>&nbsp;Something went wrong!
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="update-item-id" value=""/>
+                    <div class="form-group">
+                        <label for="update-item-fname" class="control-label" th:text="#{first.name}"></label>
+                        <input type="text" class="form-control" id="update-item-fname"
+                               maxlength="15"
+                               data-error="Firstname cannot be blank" required="true"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-item-lname" class="control-label" th:text="#{last.name}"></label>
+                        <input type="text" class="form-control" id="update-item-lname"
+                               maxlength="15"
+                               data-error="Lastname cannot be blank" required="true"/>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info update-item-confirm"
+                                    th:text="#{update}"></button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    th:text="#{cancel}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="remove-user-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" th:text="#{remove}"></h5>
+                    <div class="alert alert-info" hidden="true">
+                        <strong>Success</strong>&nbsp;User removed
+                    </div>
+                    <div class="alert alert-danger" hidden="true">
+                        <strong>Danger</strong>&nbsp;Something went wrong!
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title">Are you sure you want to remove user</h5>
+                    <div class="modal-footer">
+                        <input type="hidden" class="remove-item-id" value=""/>
+                        <button type="button" class="btn btn-danger remove-item-confirm"
+                                th:text="#{remove}"></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                th:text="#{cancel}"></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

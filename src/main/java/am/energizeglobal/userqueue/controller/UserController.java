@@ -18,7 +18,7 @@ public class UserController {
     private IUserManager userManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String loadAllUsers(Locale locale, Model model) {
+    public String loadAllUsers(Model model) {
         Set<User> users = userManager.getAllUsers();
         model.addAttribute("users", users);
         return "users";

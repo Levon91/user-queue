@@ -1,25 +1,34 @@
-
 $(document).ready(function () {
 
-    $('.remove-item').click(function(event) {
-        var id=$(this).prop('id');
+    $('.update-item').click(function (event) {
+        var id = $(this).prop('id');
+        var firstName = $("#first-name").val();
+        var lastName = $('#last-name').val();
+        $('.update-item-id').val(id);
+        $('.update-item-fname').val(firstName);
+        $('.update-item-lname').val(lastName);
+        console.log('update-item ' + id + ' ' + firstName + ' ' + lastName)
+    });
+
+    $('.remove-item').click(function (event) {
+        var id = $(this).prop('id');
         $('.remove-item-id').val(id);
     });
 
-    $('.remove-item-confirm').click(function(event) {
+    $('.remove-item-confirm').click(function (event) {
         var id = $('.remove-item-id').val();
         console.log(id);
         $.ajax({
-            type: "GET",
-            url: id + "/_delete",
+            type: 'GET',
+            url: id + '/_delete',
             success: function (result) {
                 console.log('SUCCESS CASE result:', result);
-                $(".alert-info").fadeTo(1000, 700).slideUp(700, function(){
+                $(".alert-info").fadeTo(1000, 700).slideUp(700, function () {
                     $('#remove-user-modal').modal('hide');
                     $(".alert-info").alert('close');
                 });
                 // location.reload();
-                var rowToDelete = $('#'+id).closest('tr');
+                var rowToDelete = $('#' + id).closest('tr');
                 var nextRow = rowToDelete.next();
 
                 nextRow.remove();
@@ -27,7 +36,7 @@ $(document).ready(function () {
             },
             error: function (e) {
                 console.log('ERROR CASE result:', e);
-                $(".alert-success").fadeTo(1000, 700).slideUp(700, function(){
+                $(".alert-success").fadeTo(1000, 700).slideUp(700, function () {
                     $(".alert-danger").alert('close');
                     $('#remove-user-modal').modal('hide');
                 });
@@ -47,23 +56,23 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "add-user",
+            type: 'POST',
+            contentType: 'application/json',
+            url: 'add-user',
             data: JSON.stringify(formData),
             dataType: 'json',
             success: function (result) {
                 console.log('SUCCESS CASE result:', result);
-                $(".alert-success").fadeTo(1000, 700).slideUp(700, function(){
+                $(".alert-success").fadeTo(1000, 700).slideUp(700, function () {
                     $(".alert-success").alert('close');
                     $('#add-user-modal').modal('hide');
                 });
 
-                $('#table-users > tbody').append(generateRow(result.id, result.firstName, result.lastName));
+                $('#table-users').find('> tbody').append(generateRow(result.id, result.firstName, result.lastName));
             },
             error: function (e) {
                 console.log('ERROR CASE result:', e);
-                $(".alert-success").fadeTo(1000, 700).slideUp(700, function(){
+                $(".alert-success").fadeTo(1000, 700).slideUp(700, function () {
                     $(".alert-danger").alert('close');
                     $('#add-user-modal').modal('hide');
                 });
@@ -71,19 +80,21 @@ $(document).ready(function () {
         });
 
         function generateRow(id, firstName, lastName) {
-            return '<tr data-toggle="collapse" data-target="#user-info-collapse"><td>' +
-                id + '</td><td>' + firstName + '</td><td>' + lastName + '</td><td>' +
+            return '<tr data-toggle="collapse" data-target="#user-info-collapse">'
+                + '<td>' + id + '</td>'
+                + '<td>' + firstName + '</td>'
+                + '<td>' + lastName + '</td>'
+                + '<td>'
                 + '<a href="#" id="rm-btn" role="button" data-toggle="modal" data-target="#remove-user-modal" class="btn btn-danger">Remove</a>'
-                +'</td></tr>';
+                + '</td></tr>';
         }
 
         resetData();
 
         function resetData() {
-            $("#firs-tname").val("");
-            $("#last-name").val("");
+            $("#firs-tname").val('');
+            $("#last-name").val('');
         }
-
     }
 
     function formSuccess() {

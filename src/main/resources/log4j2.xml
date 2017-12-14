@@ -1,0 +1,37 @@
+<Configuration monitorInterval="60">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{dd/MM/yyyy HH:mm:ss} %c %m%n"/>
+        </Console>
+        <RandomAccessFile  name="FILE" fileName="E:\um-logs\um.${date:yyyy-MM-dd_hh-mm-ss}.log" append="true" immediateFlush="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss}  %-6p  %C{1}.%t:%L  >>> %m%n"/>
+        </RandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="log4j.test.Log4jTest" level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FILE"/>
+        </Logger>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FILE"/>
+        </Root>
+    </Loggers>
+
+    <!-- Rolling File Appender -->
+    <RollingFile name="FileAppender" fileName="E:\um-logs\log4j2-um.log"
+                 filePattern="logs/log4j2-phonebook-%d{yyyy-MM-dd}-%i.log">
+        <PatternLayout>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </PatternLayout>
+        <Policies>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+</Configuration>

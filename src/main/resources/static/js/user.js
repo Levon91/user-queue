@@ -2,12 +2,14 @@ $(document).ready(function () {
 
     $('.update-item').click(function (event) {
         var id = $(this).prop('id');
-        var firstName = $("#first-name").val();
-        var lastName = $('#last-name').val();
+        var firstName = document.getElementById("first-name").value;
+        var lastName = document.getElementById("last-name").value;
         $('.update-item-id').val(id);
         $('.update-item-fname').val(firstName);
         $('.update-item-lname').val(lastName);
-        console.log('update-item ' + id + ' ' + firstName + ' ' + lastName)
+        console.log('update-id ' + id);
+        console.log('update-fname ' + firstName);
+        console.log('update-lname ' + lastName);
     });
 
     $('.remove-item').click(function (event) {
@@ -20,14 +22,13 @@ $(document).ready(function () {
         console.log(id);
         $.ajax({
             type: 'GET',
-            url: id + '/_delete',
+            url: 'user/' + id + '/_delete',
             success: function (result) {
                 console.log('SUCCESS CASE result:', result);
                 $(".alert-info").fadeTo(1000, 700).slideUp(700, function () {
                     $('#remove-user-modal').modal('hide');
                     $(".alert-info").alert('close');
                 });
-                // location.reload();
                 var rowToDelete = $('#' + id).closest('tr');
                 var nextRow = rowToDelete.next();
 
@@ -58,7 +59,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: 'add-user',
+            url: 'user/_add',
             data: JSON.stringify(formData),
             dataType: 'json',
             success: function (result) {
@@ -88,20 +89,5 @@ $(document).ready(function () {
                 + '<a href="#" id="rm-btn" role="button" data-toggle="modal" data-target="#remove-user-modal" class="btn btn-danger">Remove</a>'
                 + '</td></tr>';
         }
-
-        resetData();
-
-        function resetData() {
-            $("#firs-tname").val('');
-            $("#last-name").val('');
-        }
-    }
-
-    function formSuccess() {
-        $(".modal").close();
-    }
-
-    function toggler(divId) {
-        $("#" + divId).toggle();
     }
 });

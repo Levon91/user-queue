@@ -12,7 +12,8 @@
 <body>
 <div class="container">
     <div style="float: right;">
-        <a href="/?lang=en">English </a> | <a href="/?lang=ru">Russian </a> | <a href="/?lang=hy">Armenian</a>
+        <a href="/user-queue/user?lang=en">English </a> | <a href="/user-queue/user?lang=ru">Russian </a> | <a
+            href="/user-queue/user?lang=hy">Armenian</a>
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home" th:text="#{home}"></a></li>
@@ -33,26 +34,34 @@
                         <th class="col-md-1" th:text="#{action}"></th>
                     </tr>
                     </thead>
-                    <tbody th:each="user : ${users}">
-                    <tr class="user-info" data-toggle="collapse"
-                        th:attr="data-target='.user-info-collapse-' + ${user.id}">
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.firstName}"></td>
-                        <td th:text="${user.lastName}"></td>
-                        <td>
-                            <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
-                               data-target="#update-user-modal" class="update-item"><span
-                                    class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
-                            <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
-                               data-target="#remove-user-modal" class="remove-item"><span
-                                    class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    </tr>
-                    <tr th:classappend="${'user-info-collapse-' + user.id}" class="collapse">
-                        <td><span class="glyphicon glyphicon-chevron-right"></span></td>
-                        <td th:text="${user.aheadUser}" colspan="1"></td>
-                        <td colspan="2"></td>
-                    </tr>
+                    <tbody>
+                    <th:block th:each="user : ${users}">
+                        <tr th:attr="data-target='#accordion_'+${user.id}" data-toggle="collapse"
+                            class="accordion-toggle">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.firstName}"></td>
+                            <td th:text="${user.lastName}"></td>
+                            <td>
+                                <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                                   data-target="#update-user-modal" class="update-item"><span
+                                        class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
+                                <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                                   data-target="#remove-user-modal" class="remove-item"><span
+                                        class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="hiddenRow">
+                                <div class="accordion-body collapse" th:id="'accordion_'+${user.id}"
+                                     th:switch="${user.aheadUser}">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                    <span th:case="null" th:text="${'First in queue'}"></span>
+                                    <span th:case="*" th:text="'Ahead user id: '+${user.aheadUser}"></span>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </th:block>
                     </tbody>
                 </table>
 
@@ -149,6 +158,7 @@
             </div>
         </div>
     </div>
+
     <div id="remove-user-modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

@@ -8,24 +8,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Locale;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private IUserManager userManager;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String loadAllUsers(Model model) {
         Set<User> users = userManager.getAllUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
-    @RequestMapping(value = "/add-user", method = RequestMethod.POST)
-    public @ResponseBody User addUser(@Valid @RequestBody User user) {
+    @RequestMapping(value = "/_add", method = RequestMethod.POST)
+    public @ResponseBody
+    User addUser(@Valid @RequestBody User user) {
         User result;
         if (user.getFirstName() == null && user.getLastName() == null) {
             return null;
@@ -36,10 +37,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}/_delete", method = RequestMethod.GET)
-    public @ResponseBody String addUser(@PathVariable(value = "id") long id, Model model) {
+    public @ResponseBody
+    String addUser(@PathVariable(value = "id") long id, Model model) {
         if (id > 0) {
             boolean removed = userManager.removeUserById(id);
-            if (!removed){
+            if (!removed) {
                 return "error";
             }
             model.addAttribute("response", removed);

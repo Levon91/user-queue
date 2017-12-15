@@ -42,8 +42,15 @@ public class UserManager implements IUserManager {
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public boolean removeUserById(long id) {
         boolean isDeleted = false;
+        User toBeRemoved = userRepository.findById(id);
+        User user = userRepository.findNextRecord(id);
+        if (toBeRemoved != null) {
+            if (user != null) {
+                user.setAheadUser(toBeRemoved.getAheadUser());
+            }
+        }
         int byId = userRepository.deleteById(id);
-        if (byId > 0){
+        if (byId > 0) {
             isDeleted = true;
         }
         return isDeleted;

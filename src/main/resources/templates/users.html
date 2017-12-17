@@ -39,7 +39,8 @@
                         <tr th:attr="data-target='#accordion_'+${user.id}" data-toggle="collapse"
                             class="accordion-toggle">
                             <td th:text="${user.id}"></td>
-                            <td th:text="${user.firstName}"></td>
+                            <td><a href="#" th:text="${user.firstName}" data-toggle="popover" data-placement="top"
+                                   th:attr="data-content=${user.aheadUser}"></a> </td>
                             <td th:text="${user.lastName}"></td>
                             <td>
                                 <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
@@ -50,16 +51,16 @@
                                         class="glyphicon glyphicon-trash"></span></a>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4" class="hiddenRow">
-                                <div class="accordion-body collapse" th:id="'accordion_'+${user.id}"
-                                     th:switch="${user.aheadUser}">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                    <span th:case="null" th:text="${'First in queue'}"></span>
-                                    <span th:case="*" th:text="'Ahead user id: '+${user.aheadUser}"></span>
-                                </div>
-                            </td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td colspan="4" class="hiddenRow">-->
+                                <!--<div class="accordion-body collapse" th:id="'accordion_'+${user.id}"-->
+                                     <!--th:switch="${user.aheadUser}">-->
+                                    <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
+                                    <!--<span th:case="null" th:text="${'First in queue'}"></span>-->
+                                    <!--<span th:case="*" th:text="'Ahead user id: '+${user.aheadUser}"></span>-->
+                                <!--</div>-->
+                            <!--</td>-->
+                        <!--</tr>-->
 
                     </th:block>
                     </tbody>

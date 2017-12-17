@@ -36,6 +36,13 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "/{id}/_info", method = RequestMethod.GET)
+    public String userInfo(@PathVariable(value = "id") long id, Model model) {
+        User user = userManager.getUserById(id);
+        model.addAttribute("user", user);
+        return "users";
+    }
+
     @RequestMapping(value = "/{id}/_delete", method = RequestMethod.GET)
     public @ResponseBody
     String addUser(@PathVariable(value = "id") long id, Model model) {

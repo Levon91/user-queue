@@ -1,5 +1,23 @@
 $(document).ready(function () {
 
+    $('[data-toggle="popover"]').popover();
+
+    // function fetchData() {
+    //     var fetchData = '';
+    //     var element = $(this);
+    //     var id = element.attr('id');
+    //
+    //     $.ajax({
+    //         url: id + '_info',
+    //         method:'get',
+    //         async:false,
+    //         success:function (data) {
+    //             fetchData = data;
+    //         }
+    //     });
+    //     return fetchData
+    // }
+
     $('.update-item').click(function (event) {
         var id = $(this).prop('id');
         var firstName = document.getElementById("first-name").value;

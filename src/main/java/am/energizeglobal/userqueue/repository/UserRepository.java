@@ -13,6 +13,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findById(long id);
 
+    User findById(long id);
+
     User findTopByOrderByIdDesc();
 
     @Query("SELECT u FROM User u WHERE u.id = (SELECT MIN(u.id) FROM User u WHERE u.id > :uid)")

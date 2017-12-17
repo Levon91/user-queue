@@ -11,4 +11,6 @@ public interface IUserManager {
     Set<User> getAllUsers();
 
     boolean removeUserById(long id);
+
+    User getUserById(long id);
 }

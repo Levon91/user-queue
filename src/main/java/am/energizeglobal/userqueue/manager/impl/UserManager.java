@@ -55,4 +55,9 @@ public class UserManager implements IUserManager {
         }
         return isDeleted;
     }
+
+    @Override
+    public User getUserById(long id) {
+        return userRepository.findById(id);
+    }
 }

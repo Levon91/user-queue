@@ -38,30 +38,19 @@
                     <th:block th:each="user : ${users}">
                         <tr th:attr="data-target='#accordion_'+${user.id}" data-toggle="collapse"
                             class="accordion-toggle">
-                            <td th:text="${user.id}"></td>
-                            <td><a href="#" th:text="${user.firstName}" data-toggle="popover" data-placement="top"
-                                   th:attr="data-content=${user.aheadUser}"></a> </td>
-                            <td th:text="${user.lastName}"></td>
+                            <td id="id" th:text="${user.id}"></td>
+                            <td id="fname"><a href="#" th:text="${user.firstName}" data-toggle="popover" data-placement="top"
+                                   th:attr="id=${user.id}"></a></td>
+                            <td id="lname" th:text="${user.lastName}"></td>
                             <td>
-                                <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                                <a href="#" th:attr="id= ${user.id}" data-toggle="modal"
                                    data-target="#update-user-modal" class="update-item"><span
                                         class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
-                                <a href="#" th:attr="id='' + ${user.id}" data-toggle="modal"
+                                <a href="#" th:attr="id= ${user.id}" data-toggle="modal"
                                    data-target="#remove-user-modal" class="remove-item"><span
                                         class="glyphicon glyphicon-trash"></span></a>
                             </td>
                         </tr>
-                        <!--<tr>-->
-                            <!--<td colspan="4" class="hiddenRow">-->
-                                <!--<div class="accordion-body collapse" th:id="'accordion_'+${user.id}"-->
-                                     <!--th:switch="${user.aheadUser}">-->
-                                    <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
-                                    <!--<span th:case="null" th:text="${'First in queue'}"></span>-->
-                                    <!--<span th:case="*" th:text="'Ahead user id: '+${user.aheadUser}"></span>-->
-                                <!--</div>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-
                     </th:block>
                     </tbody>
                 </table>
@@ -80,6 +69,12 @@
             <h3 th:text="#{contact}"></h3>
             <p>Some content in contact tab.</p>
         </div>
+    </div>
+
+    <div id="popover_html" class="popup-marker" style="display:none;">
+        <p><label>Name :</label>p_name</p>
+        <p><label>Surname : </label>p_surname</p>
+        <p><label>Ahead user id : </label>p_ahead</p>
     </div>
 
     <div id="add-user-modal" class="modal" tabindex="-1" role="dialog">
@@ -104,7 +99,7 @@
                             <label for="first-name" class="control-label" th:text="#{first.name}"></label>
                             <input type="text" class="form-control" id="first-name"
                                    placeholder="ex:Serj" maxlength="15"
-                                   data-error="Firstname cannot be blank" required="true"/>
+                                   data-error="Firstname cannot be blank" required="true" autofocus="true"/>
                         </div>
                         <div class="form-group">
                             <label for="last-name" class="control-label" th:text="#{last.name}"></label>

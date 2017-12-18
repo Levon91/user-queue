@@ -11,6 +11,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     User save(User user);
 
+//    int updateUser(User user);
+
     User findById(long id);
 
     User findTopByOrderByIdDesc();
